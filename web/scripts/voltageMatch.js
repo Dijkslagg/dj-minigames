@@ -132,6 +132,7 @@ const VoltageGame = {
             statusText.className = 'text-white text-xl text-center';
         }, 1500);
     }
+};
 
 window.addEventListener('message', (event) => {
     const data = event.data;
