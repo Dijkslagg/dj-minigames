@@ -85,7 +85,10 @@ const VoltageGame = {
         const steps = (seconds * 1000) / interval;
         let currentStep = 0;
         
-        clearInterval(this.timerInterval);
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+        
         this.timerInterval = setInterval(() => {
             currentStep++;
             const progress = 100 - (currentStep / steps * 100);
@@ -93,13 +96,17 @@ const VoltageGame = {
             
             if (currentStep >= steps) {
                 clearInterval(this.timerInterval);
+                this.timerInterval = null;
                 this.completeHacking(false);
             }
         }, interval);
     },
 
     completeHacking(success) {
-        clearInterval(this.timerInterval);
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
         
         const statusText = document.getElementById('status-text');
         statusText.textContent = success ? 'VOLTAGE MATCHED!' : 'TIME EXPIRED!';
@@ -121,10 +128,10 @@ const VoltageGame = {
             document.body.classList.add('hidden');
             this.targetVoltages = [];
             this.playerVoltages = [];
+            this.timerInterval = null;
             statusText.className = 'text-white text-xl text-center';
         }, 1500);
     }
-};
 
 window.addEventListener('message', (event) => {
     const data = event.data;
