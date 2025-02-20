@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+    <body class="hidden h-screen w-screen flex items-center justify-center bg-black/50">
+        <div id="game-container" class="bg-gray-900 p-6 rounded-lg shadow-xl w-96">
+            <div id="hacking-game">
+                <h2 id="game-title" class="text-white text-2xl mb-4 text-center">Minigame</h2>
+                <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
+                    <div id="progress-bar" class="bg-green-500 h-4 rounded-full transition-all duration-100"></div>
+                </div>
+                <div id="letters-grid" class="grid grid-cols-3 gap-2 mb-4">
+                </div>
+                <div id="status-text" class="text-white text-xl text-center"></div>
+            </div>
+        </div>
+        <script src="scripts/memorySequence.js"></script>
+        <script src="scripts/voltageMatch.js"></script>
+    </body>
+</html>
