@@ -69,7 +69,7 @@ exports('VoltageMatch', VoltageMatch)
 
 -- Test commands
 RegisterCommand('testsequence', function()
-    local success = MemorySequence(2, 3, 5000) -- letters, rounds, seconds in ms
+    local success = MemorySequence(6, 3, 5000) -- letters, rounds, seconds in ms
     if success then
         print("success")
     else

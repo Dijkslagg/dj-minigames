@@ -5,16 +5,27 @@ const VoltageGame = {
     totalRounds: 1,
     targetVoltages: [],
     playerVoltages: [],
+    active: true,
 
     startGame(config) {
+        this.targetVoltages = [];
+        this.playerVoltages = [];
+        this.active = true; 
+
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+        const statusText = document.getElementById('status-text');
+        statusText.textContent = '';
+        statusText.className = 'text-white text-xl text-center';
+
         this.gameConfig = config;
         this.currentRound = 1;
         this.totalRounds = config.rounds || 1;
         document.getElementById('game-title').textContent = 'Voltage Match';
         this.createVoltageGrid();
         this.startProgressBar(config.timeout);
-        
-
     },
 
     createVoltageGrid() {
@@ -68,11 +79,15 @@ const VoltageGame = {
     },
 
     checkVoltages() {
+        if (!this.active) return;
+        if (this.targetVoltages.length === 0 || this.playerVoltages.length === 0) return;
+
         const allMatch = this.targetVoltages.every((target, index) => {
             return Math.abs(target - this.playerVoltages[index]) <= (this.gameConfig.tolerance || 0);
         });
         
         if (allMatch) {
+            this.active = false; 
             this.completeHacking(true);
         }
     },
@@ -90,6 +105,8 @@ const VoltageGame = {
         }
         
         this.timerInterval = setInterval(() => {
+            if (!this.active) return; 
+            
             currentStep++;
             const progress = 100 - (currentStep / steps * 100);
             progressBar.style.width = `${progress}%`;
@@ -97,22 +114,30 @@ const VoltageGame = {
             if (currentStep >= steps) {
                 clearInterval(this.timerInterval);
                 this.timerInterval = null;
-                this.completeHacking(false);
+                if (this.active) { 
+                    this.completeHacking(false);
+                }
             }
         }, interval);
     },
 
     completeHacking(success) {
+        this.active = false;
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
             this.timerInterval = null;
         }
         
         const statusText = document.getElementById('status-text');
-        statusText.textContent = success ? 'VOLTAGE MATCHED!' : 'TIME EXPIRED!';
-        statusText.className = success ? 
-            'text-green-500 text-2xl text-center font-bold' : 
-            'text-red-500 text-2xl text-center font-bold';
+        
+        if (success) {
+            statusText.textContent = 'VOLTAGES MATCHED!';
+            statusText.className = 'text-green-500 text-2xl text-center font-bold';
+        } else {
+            const timeExpired = !this.playerVoltages.length;
+            statusText.textContent = timeExpired ? 'TIME EXPIRED!' : 'VOLTAGES INCORRECT!';
+            statusText.className = 'text-red-500 text-2xl text-center font-bold';
+        }
         
         fetch(`https://${GetParentResourceName()}/hackingComplete`, {
             method: 'POST',
