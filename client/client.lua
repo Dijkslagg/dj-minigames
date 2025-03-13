@@ -2,7 +2,7 @@ local isPlaying = false
 local currentCallback = nil
 
 -- RegisterCommand('testminigame', function(source, args)
---     -- local success = exports['dj-minigames']:SlidingPuzzle(2, 2, 30)
+    -- local success = exports['dj-minigames']:SlidingPuzzle(2, 2, 30)
 --     -- local succes = exports['dj-minigames']:MemoryGame(4, 3, 15)
 --     -- local success = exports['dj-minigames']:MatchingGame(5, 15, 10)
 --     -- local success = exports['dj-minigames']:NumberRecallGame(5, 3, 10, 1, "normal")

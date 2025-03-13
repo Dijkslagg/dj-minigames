@@ -2,6 +2,10 @@
 
 A collection of minigames to enhance your gaming experience
 
+
+## PREVIEW: [DJ-MINIGAMES v1.0.0](https://youtu.be/z5MtYoWPtyI)
+
+
 ## Features
 
 - **7 Different Minigames** - Variety of skill-based challenges
