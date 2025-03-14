@@ -14,6 +14,7 @@ ui_page 'web/index.html'
 files {
     'web/index.html',
     'web/minigames/*.js',
+    'web/assets/js/vue.js', 
     'web/assets/js/soundManager.js',
     'web/assets/js/gameApp.js',
     'web/assets/sounds/click.mp3',
